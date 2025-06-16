@@ -10,7 +10,7 @@ public class ConstructorTest extends BaseTest {
     @Test
     @DisplayName("Тест на переход к разделу Булки")
     @Description("Проверяет переход по клику на раздел Булки на главной странице")
-    public void checkClickBunChapter() {
+    public void checkClickBunChapter() throws InterruptedException {
         HomePageStellarBurger homePage = new HomePageStellarBurger(driver);
         homePage.clickSauceChapter();
         homePage.clickBunChapter();
@@ -20,7 +20,7 @@ public class ConstructorTest extends BaseTest {
     @Test
     @DisplayName("Тест на переход к разделу Соусы")
     @Description("Проверяет переход по клику на раздел Соусы на главной странице")
-    public void checkClickSauceChapter() {
+    public void checkClickSauceChapter() throws InterruptedException {
         HomePageStellarBurger homePage = new HomePageStellarBurger(driver);
         homePage.clickSauceChapter();
         Assert.assertTrue("Раздел 'Соусы' не активен", homePage.isSelectedSauceChapterDisplayed());

@@ -1,39 +1,10 @@
 package pageobject;
 
-import client.UserClient;
-import generator.UserGenerator;
-import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import model.User;
-import model.UserCredentials;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-public class LoginTest extends BaseTest {
-    private UserClient userClient;
-    private User user;
-    private String accessToken;
-
-    @Before
-    @Description("Создание тестового пользователя через API")
-    public void setUp() {
-        super.setUp(); // Вызов родительского метода для инициализации драйвера
-        user = UserGenerator.getRandom();
-        userClient = new UserClient();
-        userClient.create(user);
-        accessToken = userClient.login(UserCredentials.from(user))
-                .extract().path("accessToken");
-    }
-
-    @After
-    @Description("Удаление тестового пользователя через API")
-    public void cleanUp() {
-        if (accessToken != null) {
-            userClient.delete(accessToken, UserCredentials.from(user));
-        }
-    }
+public class LoginTest extends BaseUserTest {
 
     @Test
     @DisplayName("Тест на вход на главной странице")

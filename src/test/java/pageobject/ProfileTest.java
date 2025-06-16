@@ -1,39 +1,10 @@
 package pageobject;
 
-import client.UserClient;
-import generator.UserGenerator;
-import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import model.User;
-import model.UserCredentials;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-public class ProfileTest extends BaseTest {
-    private UserClient userClient;
-    private User user;
-    private String accessToken;
-
-    @Before
-    @Description("Создание тестового пользователя через API")
-    public void setUp() {
-        super.setUp(); // Инициализация драйвера через BaseTest
-        user = UserGenerator.getRandom();
-        userClient = new UserClient();
-        userClient.create(user);
-        accessToken = userClient.login(UserCredentials.from(user))
-                .extract().path("accessToken");
-    }
-
-    @After
-    @Description("Удаление тестового пользователя через API")
-    public void tearDown() {
-        if (accessToken != null) {
-            userClient.delete(accessToken, UserCredentials.from(user));
-        }
-    }
+public class ProfileTest extends BaseUserTest {
 
     @Test
     @DisplayName("Тест на переход по клику на Личный кабинет")
@@ -41,7 +12,7 @@ public class ProfileTest extends BaseTest {
         HomePageStellarBurger homePage = new HomePageStellarBurger(driver);
         homePage.clickProfileButton();
         LoginWindow loginWindow = new LoginWindow(driver);
-        Assert.assertTrue("Кнопка входа не отображается", loginWindow.isEntranceButtonDisplayed());
+        Assert.assertTrue("Кнопка входа не отображается", loginWindow.isLoginButtonDisplayed());
     }
 
     @Test
@@ -78,7 +49,7 @@ public class ProfileTest extends BaseTest {
         profileWindow.clickLogoutButton();
         LoginWindow loginWindow = new LoginWindow(driver);
         Assert.assertTrue("Кнопка входа не отображается после выхода",
-                loginWindow.isEntranceButtonDisplayed());
+                loginWindow.isLoginButtonDisplayed());
     }
 
     private void performLogin() {

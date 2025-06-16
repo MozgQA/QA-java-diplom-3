@@ -1,44 +1,13 @@
 package pageobject;
 
-import client.UserClient;
-import generator.UserGenerator;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
-import model.User;
 import model.UserCredentials;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-public class RegistrationTest extends BaseTest{
-    private static final String INCORRECT_PASSWORD = "1";
-
-    private WebDriver driver;
-    private User user;
-    private UserClient userClient;
-    private String accessToken;
-
-
-    @Before
-    @Description("Открывает страницу приложения, через API создает рандомного пользователя, авторизуется под пользователем, получает токен")
-    public void setUp() {
-        driver = new ChromeDriver();
-        driver.get(getBaseUrl());
-        user = UserGenerator.getRandom();
-        userClient = new UserClient();
-    }
-
-    @After
-    @Description("Выходит из браузера, через API удаляет созданного пользователя")
-    public void teardown() {
-        driver.quit();
-        if(accessToken != null) {
-            userClient.delete(accessToken, UserCredentials.from(user));
-        }
-    }
+public class RegistrationTest extends BaseUserTest{
+    private static final String INCORRECT_PASSWORD = "11111";
 
     @Test
     @DisplayName("Тест на успешную регистрацию")
@@ -53,7 +22,7 @@ public class RegistrationTest extends BaseTest{
         objRegistration.inputEmailField(user.getEmail());
         objRegistration.inputPasswordField(user.getPassword());
         objRegistration.clickRegistrationButton();
-        Assert.assertTrue(objLogin.isEntranceButtonDisplayed());
+        Assert.assertTrue(objLogin.isLoginButtonDisplayed());
         accessToken = userClient.login(UserCredentials.from(user))
                 .extract().path("accessToken");
     }
