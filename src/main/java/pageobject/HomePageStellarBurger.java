@@ -1,7 +1,9 @@
 package pageobject;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+
 
 public class HomePageStellarBurger extends AbstractPageObject {
 
@@ -17,44 +19,54 @@ public class HomePageStellarBurger extends AbstractPageObject {
         super(driver);
     }
 
+    @Step("Нажать на кнопку 'Войти в аккаунт'")
     public void clickAccountLogin() {
         driver.findElement(ACCOUNT_LOGIN).click();
-
     }
 
+    @Step("Проверить видимость кнопки 'Оформить заказ'")
     public boolean isOrderButtonDisplayed() {
-        checkThatElementIsEnabled(ORDER_BUTTON);
+        waitElementIsEnabled(ORDER_BUTTON);
         return driver.findElement(ORDER_BUTTON).isDisplayed();
     }
 
+    @Step("Нажать на кнопку личный кабинет")
     public void clickProfileButton() {
         driver.findElement(PROFILE_BUTTON).click();
     }
 
+    @Step("Проверить видимость заголовка 'Соберите бургер'")
     public boolean isAssembleBurgerChapterDisplayed() {
-        checkThatElementIsEnabled(ASSEMBLE_BURGER_CHAPTER);
+        waitElementIsEnabled(ASSEMBLE_BURGER_CHAPTER);
         return driver.findElement(ASSEMBLE_BURGER_CHAPTER).isDisplayed();
     }
 
+    @Step("Нажать на раздел 'Булки'")
     public void clickBunChapter() {
         driver.findElement(BUN_CHAPTER).click();
     }
 
+    @Step("Нажать на раздел 'Соусы'")
     public void clickSauceChapter(){
         driver.findElement(SAUCE_CHAPTER).click();
     }
 
+    @Step("Нажать на раздел 'Начинки'")
     public void clickFillingChapter() {
         driver.findElement(FILLING_CHAPTER).click();
     }
 
+    @Step("Проверить активность раздела 'Булки'")
     public boolean isSelectedBunChapterDisplayed() {
         return isCurrentDisplayed(BUN_CHAPTER);
     }
 
+    @Step("Проверить активность раздела 'Соусы'")
     public boolean isSelectedSauceChapterDisplayed() {
         return isCurrentDisplayed(SAUCE_CHAPTER);
     }
+
+    @Step("Проверить активность раздела 'Начинки'")
     public boolean isSelectedFillingChapterDisplayed() {
         return isCurrentDisplayed(FILLING_CHAPTER);
     }

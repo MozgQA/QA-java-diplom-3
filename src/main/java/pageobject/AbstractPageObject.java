@@ -1,10 +1,12 @@
 package pageobject;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public abstract class AbstractPageObject {
 
@@ -14,17 +16,13 @@ public abstract class AbstractPageObject {
         this.driver = driver;
     }
 
-    protected void clickElement(By element) {
-        driver.findElement(element).click();
-    }
-
-    protected void checkThatElementIsEnabled(By element) {
-        new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.elementToBeClickable(element));
-        Assert.assertTrue(driver.findElement(element).isEnabled());
-    }
-
-    protected String  getTextOfElement(By element){
-        return driver.findElement(element).getText();
+    protected void waitElementIsEnabled(By element) {
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(5))
+                    .until(ExpectedConditions.elementToBeClickable(element));
+        } catch (Exception e) {
+            //ловим timeout чтобы тесты корректно завершали работу и удаляли пользователя
+            throw new TimeoutException(e);
+        }
     }
 }

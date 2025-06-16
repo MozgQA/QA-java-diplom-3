@@ -1,5 +1,6 @@
 package pageobject;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -13,16 +14,19 @@ public class ProfileWindow extends AbstractPageObject {
         super(driver);
     }
 
+    @Step("Нажать на кнопку 'Конструктор'")
     public void clickConstructorButton() {
         driver.findElement(CONSTRUCTOR_BUTTON).click();
     }
 
+    @Step("Нажать на логотип")
     public void clickLogoButton() {
         driver.findElement(LOGO_BUTTON).click();
     }
 
+    @Step("Нажать на кнопку 'Выход'")
     public void clickLogoutButton() {
-        checkThatElementIsEnabled(LOGOUT_BUTTON);
+        waitElementIsEnabled(LOGOUT_BUTTON);
         driver.findElement(LOGOUT_BUTTON).click();
     }
 }
